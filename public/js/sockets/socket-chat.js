@@ -13,25 +13,30 @@ var usuario = {
 socket.on('connect', function () {
   socket.emit('getInChat', usuario, function (resp) {
     console.log('Usuarios conectados', resp);
+    renderUsers(resp);
   });
 });
 
 socket.on('notifyUserDisconected', function (message) {
   console.log(message);
+  renderUsers(message.conectados);
+  notifyUserDisconected(message);
+  scrollBottom();
 });
 
 socket.on('notifyUserConected', function (message) {
   console.log(message);
+  renderUsers(message.conectados);
+  notifyUserConected(message);
+  scrollBottom();
 });
 
 socket.on('sendMessage', function (message) {
   console.log(message);
+  renderMessages(message, false);
+  scrollBottom();
 });
 
 socket.on('privateMessage', function (message) {
   console.log(message);
 });
-
-// socket.emit('sendMessage', {
-//   message: 'Hola a todos soy ' + usuario.nombre,
-// });
