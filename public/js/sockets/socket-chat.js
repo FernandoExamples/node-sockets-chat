@@ -11,9 +11,9 @@ var usuario = {
 };
 
 socket.on('connect', function () {
-  socket.emit('getInChat', usuario, function (resp) {
-    console.log('Usuarios conectados', resp);
-    renderUsers(resp);
+  socket.emit('getInChat', usuario, function (conectados) {
+    console.log('Usuarios conectados', conectados);
+    renderUsers(conectados);
   });
 });
 
@@ -39,4 +39,6 @@ socket.on('sendMessage', function (message) {
 
 socket.on('privateMessage', function (message) {
   console.log(message);
+  renderMessages(message, false);
+  scrollBottom();
 });

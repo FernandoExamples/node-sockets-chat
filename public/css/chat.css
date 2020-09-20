@@ -1,9 +1,17 @@
 .chat-list {
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;
-    height: 600px !important;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  height: 600px !important;
 }
 
 textarea {
-    width: 100%;
+  width: 100%;
+}
+
+.selected {
+  background: #ebf3f5;
+}
+
+.show-aside {
+  left: 0 !important;
 }

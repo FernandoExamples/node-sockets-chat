@@ -21,6 +21,9 @@ class Users {
     return this.personas;
   }
 
+  /**
+   * Regresa todos los clientes conectados a una sala especifica.
+   */
   getPeopleByRoom(sala) {
     let peopleByRoom = this.personas.filter((persona) => {
       return persona.sala === sala;

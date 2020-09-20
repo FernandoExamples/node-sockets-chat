@@ -1,24 +1,31 @@
 var params = new URLSearchParams(window.location.search);
+if (!params.get('nombre').trim() || !params.get('sala').trim()) {
+  window.location = 'index.html';
+}
+var currentId = null;
 
 //referenias del DOM
 var divUsuarios = $('#divUsuarios');
 var formEnviar = $('#formEnviar');
 var txtMensaje = $('#txtMensaje');
 var divChatbox = $('#divChatbox');
+var box_title = $('#box-title');
+var checkboxAll = $('#checkboxAll');
+var btnOpenPanel = $('#btnOpenPanel');
+var chatLeftAside = $('#chatLeftAside');
+
+$('#box-title small').text(params.get('sala'));
+$('#chat-title span').text(params.get('sala'));
 
 //Funciones para renderizar el DOM
 function renderUsers(personas) {
-  var sala = params.get('sala');
   var html = '';
-  html += '<li>';
-  html += `<a href="javascript:void(0)" class="active"> Chat de <span> ${sala}</span></a>`;
-  html += '</li>';
 
   for (let i = 0; i < personas.length; i++) {
     let nombre = personas[i].nombre;
     let id = personas[i].id;
     html += `<li>`;
-    html += `  <a data-id='${id}' href="javascript:void(0)"><img src="assets/images/users/1.jpg" alt="user-img" class="img-circle">`;
+    html += `  <a data-id='${id}' data-nombre='${nombre}' href="javascript:void(0)"><img src="assets/images/users/1.jpg" alt="user-img" class="img-circle">`;
     html += `    <span>${nombre} <small class="text-success">online</small></span></a>`;
     html += `</li>`;
   }
@@ -104,23 +111,64 @@ function scrollBottom() {
 //Listeners
 divUsuarios.on('click', 'a', function () {
   var id = $(this).data('id');
-  if (id) console.log(id);
+  var nombre = $(this).data('nombre');
+  if (!id) return;
+
+  console.log(id);
+  console.log(nombre);
+
+  checkboxAll.prop('checked', false);
+  divChatbox.html('');
+  $('a').removeClass('selected');
+  $(this).addClass('selected');
+  $('#box-title small').text(nombre);
+  chatLeftAside.toggleClass('show-aside');
+  
+  currentId = id;
+});
+
+checkboxAll.on('click', function () {
+  checkboxAll.prop('checked', true);
+  $('a').removeClass('selected');
+  $('#box-title small').text(params.get('sala'));
+  currentId = null;
 });
 
 formEnviar.submit(function (e) {
   e.preventDefault();
   if (!txtMensaje.val().trim()) return;
 
-  socket.emit(
-    'sendMessage',
-    {
-      message: txtMensaje.val(),
-    },
-    function (message) {
-      console.log(message);
-      txtMensaje.val('');
-      renderMessages(message, true);
-      scrollBottom();
-    }
-  );
+  if (currentId) {
+    socket.emit(
+      'privateMessage',
+      {
+        message: txtMensaje.val(),
+        to: currentId,
+      },
+      function (message) {
+        console.log(message);
+        txtMensaje.val('');
+        renderMessages(message, true);
+        scrollBottom();
+      }
+    );
+  } else {
+    socket.emit(
+      'sendMessage',
+      {
+        message: txtMensaje.val(),
+      },
+      function (message) {
+        console.log(message);
+        txtMensaje.val('');
+        renderMessages(message, true);
+        scrollBottom();
+      }
+    );
+  }
+});
+
+btnOpenPanel.click(function (e) {
+  e.preventDefault();
+  chatLeftAside.toggleClass('show-aside');
 });

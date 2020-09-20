@@ -48,21 +48,29 @@
 								<!-- .chat-row -->
 								<div class="chat-main-box">
 									<!-- .chat-left-panel -->
-									<div class="chat-left-aside">
-										<div class="open-panel"><i class="ti-angle-right"></i></div>
+									<div class="chat-left-aside" id="chatLeftAside">
+										<div class="open-panel" id="btnOpenPanel"><i class="ti-angle-right"></i></div>
 										<div class="chat-left-inner">
 											<div class="form-material">
 												<input class="form-control p-20" type="text" placeholder="Buscar Contacto">
 											</div>
-											<ul class="chatonline style-none" id="divUsuarios">
-												<!-- <li>
-													<a href="javascript:void(0)" class="active"> Chat de <span> Juegos</span></a>
-												</li>
+
+											<ul class="chatonline style-none">
 												<li>
-													<a href="javascript:void(0)"><img src="assets/images/users/1.jpg" alt="user-img" class="img-circle">
-														<span>Varun Dhavan <small class="text-success">online</small></span></a>
+													<a class="active" id="chat-title"> Chat de <span> Juegos</span></a>
 												</li>
-												<li class="p-20"></li> -->
+												<div class="ml-3 mt-3">
+													<input checked type="checkbox" id="checkboxAll"> <label for="checkboxAll">Mandar a todos</label>
+												</div>
+												<div id="divUsuarios">
+													<!-- User Row -->
+													<!-- <li>
+														<a href="javascript:void(0)"><img src="assets/images/users/1.jpg" alt="user-img" class="img-circle">
+															<span>Varun Dhavan <small class="text-success">online</small></span></a>
+													</li> -->
+													<!-- User Row -->
+												</div>
+												<li class="p-20"></li>
 											</ul>
 										</div>
 									</div>
@@ -71,7 +79,7 @@
 									<div class="chat-right-aside">
 										<div class="chat-main-header">
 											<div class="p-20 b-b">
-												<h3 class="box-title">Sala de chat <small>Video Juegos</small></h3>
+												<h3 class="box-title" id='box-title'>Sala de chat - <small>Video Juegos</small></h3>
 											</div>
 										</div>
 

@@ -15,8 +15,8 @@ io.on('connection', (client) => {
     sendMessage(data.message, callback, client)
   );
 
-  client.on('privateMessage', (data) =>
-    privateMessage(data.message, data.to, client)
+  client.on('privateMessage', (data, callback) =>
+    privateMessage(data.message, data.to, callback, client)
   );
 });
 
@@ -31,7 +31,7 @@ function getInChat(usuario, callback, client) {
   if (!usuario.nombre || !usuario.sala) {
     return callback({
       error: true,
-      mensaje: 'El nombre y la es necesario',
+      mensaje: 'El nombre y la sala es necesario',
     });
   }
 
@@ -89,9 +89,9 @@ function sendMessage(message, callback, client) {
  * @param {String} message Mensaje a enviar
  * @param {String} to ID del cliente a quien se envia el mensaje
  */
-function privateMessage(message, to, client) {
+function privateMessage(message, to, callback, client) {
   let persona = usuarios.getPerson(client.id);
-  client.broadcast
-    .to(to)
-    .emit('privateMessage', createMessage(persona.nombre, message));
+  let newMessage = createMessage(persona.nombre, message);
+  client.broadcast.to(to).emit('privateMessage', newMessage);
+  callback(newMessage);
 }
