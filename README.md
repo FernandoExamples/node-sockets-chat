@@ -1,9 +1,13 @@
 # Notas:
 
-Este es un pequeño servidor de express listo para ejecutarse y servir la carpeta public en la web.
+Chat realizado con Node, haciendo uso de sockets. 
 
-Recuerden que deben de reconstruir los módulos de node con el comando
+## Temas puntuales
 
-```
-npm install
-```
+- Comunicación entre usuarios
+- Comunicación entre 1 a muchos
+- Comunicación 1 a 1
+- Comunicación entre salas de chat
+- Diseño del chat
+- Diseño del login
+- Notificaciones de entrada de usuarios y salida de usuarios
